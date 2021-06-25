@@ -41,4 +41,8 @@ Example:
 ```
 
 ## Sample Execution
-![execution](/images/1.)
+### Zone Transfer
+![execution](/images/1.png)
+
+### Forward Lookup Bruteforce
+![execution](/images/2.png)
