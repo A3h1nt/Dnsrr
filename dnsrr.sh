@@ -94,7 +94,7 @@ then
 	echo "	Syntax: ./dns.sh [Domain Name]"
 	echo "	Syntax: ./dns.sh [Domain Name] [Wordlist]"
 	echo "-rb   : Reverse Lookup Bruteforce"
-	echo "	Syntax: ./dns.sh [Domain Internet Protocol Address]"
+	echo "	Syntax: ./dns.sh [Domain Name]"
 	echo "-cs   : Perform DNS Cache Snooping"
 	echo "	Syntax: ./dns.sh [Name Server] [Wordlist]"
 	echo "-x    : Explain A Particular Option"
