@@ -53,4 +53,4 @@ Example:
 - Any new feature
 
 ## Contact Me
-Ping me at ![A3h1nt](https://twitter.com/A3h1nt)
+Ping me at [A3h1nt](https://twitter.com/A3h1nt).
