@@ -46,3 +46,11 @@ Example:
 
 ### Forward Lookup Bruteforce
 ![execution](/images/2.png)
+
+## To Do
+- Add new techniques that can be used to enumerate data from DNS
+- Report Bugs
+- Any new feature
+
+## Contact Me
+Ping me at ![A3h1nt](https://twitter.com/A3h1nt)
