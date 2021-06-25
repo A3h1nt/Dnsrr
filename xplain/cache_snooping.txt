@@ -1,0 +1,57 @@
+# DNS Cache Snooping
+
+Before we understand what DNS cache snooping is, we need to understand these two types of DNS queries.
+
+## Recursive : If the DNS server doesn't have a record for a particular domain, then it queries other DNS servers 
+in the hierarchy and returns the record.
+
+``````````````````````````````````````````````````````````````````````````
+v1g1lant3@backbox:~$ dig @8.8.8.8 apple.com +norecurse
+
+; <<>> DiG 9.16.1-Ubuntu <<>> @8.8.8.8 apple.com +norecurse
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 22106
+;; flags: qr ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 512
+;; QUESTION SECTION:
+;apple.com.			IN	A
+
+;; ANSWER SECTION:
+apple.com.		299	IN	A	17.253.144.10
+
+;; Query time: 28 msec
+;; SERVER: 8.8.8.8#53(8.8.8.8)
+;; WHEN: Wed Apr 07 09:51:46 IST 2021
+;; MSG SIZE  rcvd: 54
+````````````````````````````````````````````````````````````````````````````
+
+## Non-Recursive : If the DNS server doesn't have a record for a particular domain, it doesn't make any query to other DNS servers.
+
+````````````````````````````````````````````````````````````````````````````
+v1g1lant3@backbox:~$ dig @8.8.8.8 a3h1nt.wordpress.com +norecurse
+
+; <<>> DiG 9.16.1-Ubuntu <<>> @8.8.8.8 a3h1nt.wordpress.com +norecurse
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: SERVFAIL, id: 57789
+;; flags: qr ra; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 512
+;; QUESTION SECTION:
+;a3h1nt.wordpress.com.		IN	A
+
+;; Query time: 44 msec
+;; SERVER: 8.8.8.8#53(8.8.8.8)
+;; WHEN: Wed Apr 07 09:52:00 IST 2021
+;; MSG SIZE  rcvd: 49
+``````````````````````````````````````````````````````````````````````````````
+
+## In the first example ANSWER parameter is 1, that means the domain name is cached, in the second one it's 0, means it's not cached.
+
+Because of these two type of queries an attack vector arises, called DNS Cache Snooping, using which the attacker can investigate, what all domains are visited by the hosts using that particluar DNS server. Another way, to identify whether the domain name was cached or not, is to analyze the TTL, the TTL for cached record will relatively be low, as compared to the non-cached one.

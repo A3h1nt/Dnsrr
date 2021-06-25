@@ -1,0 +1,6 @@
+## What are PTR records ?
+PTR records are certain type of DNS records that resolve IP addresses to their corresponding hostname.
+
+## Reverse DNS Lookup Bruteforce
+Reverse DNS lookup bruteforce is only possible, if the DNS server has PTR records, here the attacker bruteforces the IP address to enumerate 
+different hostnames, that might not show up in forward lookup bruteforce.

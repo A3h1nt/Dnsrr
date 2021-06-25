@@ -1,0 +1,15 @@
+## What is DNS Zone Transfer ?
+DNS Zone Transfer is the process of a DNS server sharing the zone file with another DNS server. ( Also known as DNS query AXFR )
+
+*DNS ZONE TRANSFER USES TCP TO TRANSFER THE ZONE FILE*
+
+This works in form a client-server mechanism, the secondary server ( the server who wants the record ), 
+sends a request to the primary DNS server and the server responds with the DNS zone file.
+
+The Zone transfer usually happens, when you add a new server as secondary DNS server, 
+the new server would need the zone files to function properly, which are provided by the primary DNS server through zone transfer.
+
+## Where does the vulnerability arise ?
+The DNS zone transfer does not provide any authentication mechanism as to who can query the zone file. 
+So literally anyone can ask for the zone file from the server, which contains all the hosts for that particular domain and other information.
+

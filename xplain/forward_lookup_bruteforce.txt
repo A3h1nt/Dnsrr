@@ -1,0 +1,13 @@
+## Forward Lookup Bruteforce | DNS Host Bruteforce
+DNS Host bruteforce is a technique, that brute-forces common names of hosts via DNS queries and based upon the response, 
+it tells whether the host exist or not.
+
+## Working [ Target : microsoft.com ]
+1. The program opens a wordlist of common hostname.
+2. Each hostname entry in the file is concatenated with the domain, for example auth.microsoft.com, 
+   database.microsoft.com, ftp.microsoft.com, etc.
+3. Each one of these generated domain names will be requested to the DNS server.
+4. DNS server will respond to client saying “auth at microsoft.com is a non-existent host”,which basically means host doesn't exist. 
+   If the DNS server responds to client saying “ftp at microsoft.com point to IP adrress A.B.C.D”, that means the hosts exist, based upon 
+   these responses, we can enumerate other subdomains/hosts.
+
