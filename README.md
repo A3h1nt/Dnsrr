@@ -1,5 +1,5 @@
-# Dnsrr 
-Dnsrr is a tool written in bash, used to enumerate all the juicy stuff from DNS records, it uses different techniques like
+# DNSrr 
+DNSrr is a tool written in bash, used to enumerate all the juicy stuff from DNS records, it uses different techniques like
 - DNS Forward Bruteforce
 - DNS Reverse Bruteforce
 - DNS Cache Snooping
@@ -32,7 +32,7 @@ Get Started
         Syntax: ./dns.sh -x [Option_Name]
 ------------------------------------------------
 ```
-Dnsrr supports five different options, including the one that explains the other four options. So just incase you don't know what a particular option is doing, you can simply use `-x` option, to understand the technique behind it.
+DNSrr supports five different options, including the one that explains the other four options. So just incase you don't know what a particular option is doing, you can simply use `-x` option, to understand the technique behind it.
 
 Example:
 ```bash
