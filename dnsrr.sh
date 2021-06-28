@@ -53,7 +53,7 @@ function cache_snooping()
 {
 	for i in $(cat $2)
 	do
-		echo $i : `dig @$1 $i +norecurse | grep ANSWER | head -1 | awk -F , '{print $2}'`
+		echo $i : `dig @$1 $i +norecurse | grep ANSWER | head -1 | awk -F , '{print $2}'` | grep -v 0
 	done
 }
 
