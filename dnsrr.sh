@@ -1,4 +1,8 @@
 #!/bin/bash
+
+currentdir=$(pwd)
+scriptdir=$(dirname "$0")
+
 function banner()
 {
 	if [ $# -eq 1 ]
@@ -18,7 +22,7 @@ function banner()
                 echo "==========================================="
                 echo -e "== Attempting : \033[1;31m$1\033[0m     "
                 echo "==========================================="
-		echo -e "== Wordlist : \033[1;32m$2\033[0m	         "
+				echo -e "== Wordlist : \033[1;32m$2\033[0m	     "
                 echo "==========================================="
 	fi
 }
@@ -32,7 +36,14 @@ function forward_lookup_bruteforce()
 {
 	if [ $# -eq 1 ]
 	then
-		for i in $(cat list.txt);do host $i.$1;done | grep -v not | awk '{print $1 " : " $NF}'
+		# Check if we can use host -l to dump the host list of the zone, if possible. Otherwise use the list.
+		dump_host_list=$(host -l $1 2> /dev/null)
+		if [[ $dump_host_list == *"failed"* ]] ; then
+			echo "Attempting from list.txt"
+			for i in $(cat list.txt);do host $i.$1;done | grep -v not | awk '{print $1 " : " $NF}'
+		else
+			host -l $1
+		fi
 	else
 		for ip in $(cat $2);do host $ip.$1;done | grep -v not | awk '{print $1 " : " $NF}'
 	fi
@@ -44,7 +55,7 @@ function reverse_lookup_bruteforce()
 	if [[ $ip == *"NXDOMAIN"* ]]
 	then
 		echo "Invalid Domain Name!!!"
-		exit
+		cd $currentdir && exit
 	fi
 	for i in $(seq 1 255);do host $ip.$i;done | grep -v not | awk '{print $1 " : " $NF}' | sed 's/.in-addr.arpa/ /g'
 }
@@ -60,16 +71,16 @@ function cache_snooping()
 function xplain()
 {
 	case $1 in
-		z)
+		z|-z)
 			less xplain/zone_transfer.txt
 		;;
-		fb)
+		fb|-fb)
 			less xplain/forward_lookup_bruteforce.txt
 		;;
-		rb)
+		rb|-rb)
 			less xplain/reverse_lookup_bruteforce.txt
 		;;
-		cs)
+		cs|-cs)
 			less xplain/cache_snooping.txt
 		;;
 		*)
@@ -78,12 +89,13 @@ function xplain()
 	esac
 }
 
+cd $scriptdir
+
 if [ $# -lt 1 ]
 then
 	echo "Use --help to see options"
-	exit
+	cd $currentdir && exit
 fi
-
 
 if [ $1 == --help ]
 then
@@ -98,9 +110,9 @@ then
 	echo "-cs   : Perform DNS Cache Snooping"
 	echo "	Syntax: ./dns.sh [Name Server] [Wordlist]"
 	echo "-x    : Explain A Particular Option"
-	echo "	Syntax: ./dns.sh -x [Option_Name]"
+	echo "	Syntax: ./dns.sh -x [Option_Flag]"
 	echo "------------------------------------------------"
-	exit
+	cd $currentdir && exit
 fi
 
 
@@ -112,7 +124,7 @@ case $1 in
 	if [ $# -ne 3 ]
 	then
 		echo "Syntax Error !"
-		exit
+		cd $currentdir && exit
 	fi
 	# Calling the function
 	banner "Zone Transfer"
@@ -144,7 +156,7 @@ case $1 in
 	if [ $# -ne 2 ]
 	then
 		echo "Syntax Error !"
-		exit
+		cd $currentdir && exit
 	fi
 	# Calling the function
 	banner "Reverse Lookup Bruteforce"
@@ -156,7 +168,7 @@ case $1 in
 	if [ $# -ne 3 ]
 	then
 		echo "Syntax Error !"
-		exit
+		cd $currentdir && exit
 	fi
 	# Calling the function
 	banner "DNS Cache Snooping" $3
@@ -168,7 +180,7 @@ case $1 in
 	if [ $# -ne 2 ]
 	then
 		echo "What to explain !!!"
-		exit
+		cd $currentdir && exit
 	fi
 	# Calling the function
 	xplain $2
@@ -180,3 +192,4 @@ case $1 in
 	;;
 esac
 
+cd $currentdir
