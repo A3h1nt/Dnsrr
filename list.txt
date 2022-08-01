@@ -386,6 +386,7 @@ proxy
 ps
 pt
 public
+puppet
 qa
 qipai
 r
@@ -406,6 +407,7 @@ rmx
 router
 rp
 ru
+rundeck
 rys
 s
 s1
